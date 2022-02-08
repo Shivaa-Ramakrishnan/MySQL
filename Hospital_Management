@@ -6,10 +6,12 @@ create table DEPT(
 DEPT_NAME VARCHAR(50) unique key,
 DEPT_LOCATION varchar(60),
 FACILITIES varchar(200));
+insert into DEPT values('ICU','chennai','ventilator'),('Dental','Tirupur','OralHealth'),('skin','Coimbatore','Cleansing');
 
 CREATE TABLE ALL_DOCTORS(
 DOC_NO varchar(50) primary key,
 DEPT_NAME varchar(80));
+insert into ALL_DOCTORS values(1,'ICU'),(2,'Dental'),(3,'Skin');
 
 CREATE TABLE DOC_REGULAR(
 DOC_NO varchar(50) NOT NULL,
@@ -22,7 +24,8 @@ ADDRESS VARCHAR(150),
 PHONE_NUMBER LONG,
 DATE_OF_JOIN DATE,
 foreign key(DOC_NO) references ALL_DOCTORS(DOC_NO));
-
+insert into DOC_REGULAR values(1,'ICU','MBBS',100000',"06:00:00",'Chennai',27029373928,'2020-01-02');
+insert into DOC_REGULAR values(2,'Dental','BDS',50000',"07:00:00",'Tirupur',9373928122,'2020-01-04');
 CREATE TABLE DOC_ON_CALL(
 DOC_NO VARCHAR(50),
 D_NAME VARCHAR(80),
@@ -32,6 +35,7 @@ PAYMENT_DUE varchar(50),
 ADDRESS varchar(150),
 PHONE_NUMBER LONG,
 foreign key(DOC_NO) references ALL_DOCTORS(DOC_NO) );
+insert into DOC_ON_CALL values (2,'Kishore','BDS',500,'Nil','Tirupur',78379287349);
 
 CREATE TABLE PATIENT_ENTRY(
 PAT_NO VARCHAR(50) primary key,
@@ -46,6 +50,7 @@ ADDRESS varchar(50),
 CITY varchar(50),
 PHONE_NUMBER long,
 DEPT_NAME VARCHAR(50));
+insert into PATIENT_ENTRY values(1,'Kishore','2022-02-10',30,'Male',Good','Tamilnadu','Chennai',8787348334,'Dental');
 
 CREATE table PAT_CHKUP(
 PAT_NO varchar(50),
@@ -55,6 +60,7 @@ STATUS VARCHAR(50),
 TREATMENT varchar(50),
 foreign key(DOC_NO) references ALL_DOCTORS(DOC_NO),
 foreign key(PAT_NO) references PATIENT_ENTRY(PAT_NO));
+insert into PAT_CHKUP values(1,1,'Good','Critical care');
 
 CREATE TABLE ROOM_DETAILS(
 ROOM_NO VARCHAR(40) primary key,
@@ -62,6 +68,7 @@ TYPE VARCHAR(45),
 STATUS VARCHAR(45),
 RM_DL_CRG VARCHAR(50),
 OTHER_CRG varchar(45));
+insert into ROOM_DETAILS values(1,'P','G');
 
 CREATE TABLE PAT_ADMIT(
 PAT_NO VARCHAR(60),
@@ -76,6 +83,7 @@ TRMT_SDT VARCHAR(45),
 ATTDNT_NM VARCHAR(50),
 foreign key(PAT_NO) references PATIENT_ENTRY(PAT_NO),
 foreign key(ROOM_NO) references ROOM_DETAILS(ROOM_NO));
+insert into PAT_ADMIT values(1,500,'Cash',1,'ICU',"2022-01-02','Good','Good','Care','Rita');
 
 create TABLE PAT_DIS(
 PAT_NO varchar(45),
@@ -85,6 +93,7 @@ MEDICINES VARCHAR(100),
 PYMT_GV varchar(45),
 DIS_ON DATE,
 foreign key(PAT_NO) references PATIENT_ENTRY(PAT_NO));
+insert into PAT_DIS values(1,'Care','Dental','ABCD','Online','2022-02-04');
 
 CREATE TABLE PAT_REG(
 PAT_NO VARCHAR(45),
@@ -96,6 +105,7 @@ DOC_NO VARCHAR(50),
 PAYMT DOUBLE,
 foreign key(PAT_NO) references PATIENT_ENTRY(PAT_NO),
 foreign key(DOC_NO) references ALL_DOCTORS(DOC_NO));
+insert into PAT_REG values(1,'2022-03-22' 12:02:22','Good','Operation','BDS',1,50000.00);
 
 CREATE TABLE PAT_OPR(
 PAT_NO VARCHAR(50),
@@ -109,7 +119,7 @@ OPYH_NO VARCHAR(45),
 OTHER_SUG VARCHAR(50),
 foreign key(PAT_NO) references PATIENT_ENTRY(PAT_NO),
 foreign key(DOC_NO) references ALL_DOCTORS(DOC_NO));
-
+insert into PAT_OPR values(1,"2022-02-24 09:30:22",'Good','Good','Minor','ECG',2,1,'GD');
 
 
 
